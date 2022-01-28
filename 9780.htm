@@ -1,0 +1,1208 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta property="og:title" name="title" content="NASA TechPort" />
+	<meta property="og:type" name="type" content="website" />
+	<meta property="og:image" name="image" content="https://techport.nasa/gov/images/NASA-Logo.png" />
+	<meta property="og:description" name="description" content="NASA's Technology Portfolio Management System (TechPort) is a single, comprehensive resource for locating detailed information about NASA-funded technologies. Those technologies cover a broad range of areas, such as propulsion, nanotechnology, robotics, and human health. You can find useful information on NASA's technologies in TechPort, including descriptions of technologies, images, and locations where work is being performed. The system has advanced searching and reporting capabilities to allow you to focus on technologies in which you are most interested. In addition to using TechPort as a reference, you can also export information from TechPort and create customized reports on selected technologies." />
+	<meta name="version" content="3.7.2"/>
+	
+	<title>NASA TechPort - Project Data</title>
+	<link rel="icon" type="image/png" href="/images/favicon.png" />
+	
+	
+	<script type="text/javascript" src="/scripts/vendor/jquery.min.js"></script>
+	<script type="text/javascript" src="/scripts/vendor/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/scripts/vendor/jquery.dotdotdot.min.js"></script>
+	<script type="text/javascript" src="/scripts/vendor/jstz.min.js"></script>
+	<script type="text/javascript" src="/scripts/vendor/jquery.fileDownload.js"></script>
+
+	
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700" rel="stylesheet">
+
+	
+	<link rel="stylesheet" type="text/css" media="all" href="/styles/main.css?v=3.7.2" />
+
+	
+	<link rel="stylesheet" type="text/css" href="/styles/vendor/jquery-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="/styles/vendor/jquery-ui.theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="/styles/vendor/jquery-ui.structure.min.css" />
+
+	
+	<link rel="stylesheet" type="text/css" media="all" href="/styles/jquery-ui-override.css?v=3.7.2" />
+
+	
+	
+	
+		<link rel="stylesheet" type="text/css" href="/styles/project-viewer.css?v=3.7.2" />
+	
+		<link rel="stylesheet" type="text/css" href="/styles/vendor/dataTables.jqueryui.min.css?v=3.7.2" />
+	
+		<link rel="stylesheet" type="text/css" href="/styles/vendor/dataTables-responsive.jquery-ui.min.css?v=3.7.2" />
+	
+		<link rel="stylesheet" type="text/css" href="/styles/vendor/datatables.rsp.css?v=3.7.2" />
+	
+
+	
+	<script type="text/javascript" src="/scripts/base.js?v=3.7.2"></script>
+	<script type="text/javascript" src="/scripts/dialogs.js?v=3.7.2"></script>
+	
+	
+		<script type="text/javascript" src="/scripts/base.public.js?v=3.7.2"></script>
+	
+
+	
+	
+	
+		<script type="text/javascript" src="/scripts/vendor/fusioncharts/fusioncharts.js?v=3.7.2"></script>
+	
+		<script type="text/javascript" src="/scripts/vendor/fusioncharts/themes/fusioncharts.theme.techport.js?v=3.7.2"></script>
+	
+		<script type="text/javascript" src="/scripts/stage/stage.js?v=3.7.2"></script>
+	
+		<script type="text/javascript" src="/scripts/viewers.js?v=3.7.2"></script>
+	
+		<script type="text/javascript" src="/scripts/vendor/jquery.dataTables.min.js?v=3.7.2"></script>
+	
+		<script type="text/javascript" src="/scripts/vendor/datatables/dataTables.responsive.js?v=3.7.2"></script>
+	
+		<script type="text/javascript" src="/scripts/vendor/datatables/responsive.jquery.min.js?v=3.7.2"></script>
+	
+		<script type="text/javascript" src="/scripts/vendor/datatables/dataTables.jqueryui.min.js?v=3.7.2"></script>
+	
+		<script type="text/javascript" src="/scripts/vendor/datatables/datatables.rsp.js?v=3.7.2"></script>
+	
+
+	<script type="text/javascript">
+		//<![CDATA[
+		$(document).ready(function () {
+			
+
+			
+			
+				var timezone = jstz.determine(); 
+				setOlsonTimezone(timezone.name());
+			
+			
+			
+			$('#searchForm').off('submit').on('submit', function(e) {
+				simpleSearch();
+				return false;
+			});
+			
+			
+			$('#searchForm .searchQuery').autocomplete({
+				source: function(request, response) {
+					$.ajax({
+						url: '/suggestions',
+						dataType: 'json',
+						data: {
+							"searchQuery": request.term
+						},
+						success: function(data) {
+							a = 12;
+							response(data);
+						},
+						error: function(data) {
+							response("");
+						}
+					});
+				},
+				open: function(e,ui) {
+					var acData = $(this).data('ui-autocomplete');
+					acData
+					.menu
+					.element
+					.find('li div')
+					.each(function () {
+						var me = $(this);
+						var input = escapeRegex(acData.term);
+						var keywords = input.split(' ').join('|');
+						me.html(me.text().replace(new RegExp("(" + keywords + ")", "gi"), '<span class="ui-matched">$1</span>'));
+					});
+					var $acDOM = $('.techport-suggestions:first');
+					if ($acDOM.length > 0) {
+					 	$acDOM.append("<a href=\"searchOptions\" class=\"suggestions-advertisement\">Advanced Search</a>");
+					 	$acDOM.append("<div class=\"suggestions-title\">Search suggestions:</div>");
+					 	$acDOM.append("<div class=\"suggestions-help\"><a target=\"_blank\" href=\"/file/3457\">Using TechPort Search</a></div>");
+					}
+				},
+				select: function(e, ui) {
+					simpleSearch(ui.item.value);
+				},
+				minLength: 3,
+				classes: {
+					"ui-autocomplete": "techport-suggestions",
+				}
+			})
+		});
+		
+		
+		
+		//]]>
+	</script>	
+	
+</head>
+<body>
+	<div class="page-wrap">
+		<div class="visually-hidden"><a href="#contentStart" accesskey="0">Skip Navigation</a></div>
+		<div class="box0-banner">
+			<div class="banner-row-1">
+				<a href="/home">
+					
+					
+						<img class="techport-logo" alt="TechPort" src="/images/TechPort-Logo-2018.png">
+					
+				</a>
+				<a href="https://www.nasa.gov" class="external_link"><img class="nasa-logo" alt="NASA" src="/images/NASA-Logo.png"></a>
+			</div>
+			<div class="banner-row-2">
+				<div class="nav">
+					<ul>
+						<li><a href="/home" title="Home" accesskey="1">Home</a></li>
+						<li><a href="/view/taxonomy" title="Browse the NASA Technology Taxonomy" accesskey="2">Taxonomy</a></li>
+						
+						<li><a href="/about" title="About Us" accesskey="4">About Us</a></li>
+						<li><a href="/help" title="Get help using the TechPort system" accesskey="5">Help</a></li>
+					</ul>
+				</div>				
+				<div class="admin-nav">
+					<ul>
+						 
+						<li><a href="javascript:void(0)" title="Tell us what you think by providing feedback on the TechPort system." class="send-feedback" accesskey="f">Feedback</a></li>									
+					</ul>
+				</div>				
+				
+				<div class="clear"></div>
+			</div>
+			<div class="banner-row-3">
+				<select id="navigation-dropdown">
+					<option disabled="disabled" selected="selected">Navigate TechPort</option>
+					<option value="/home">Home</option>
+					<option value="/view/taxonomy">Taxonomy</option>
+					
+					<option value="/about">About Us</option>
+					<option value="/help">Help</option>
+					<option disabled="disabled">────────────────────────</option>
+					<option class="send-feedback" value="">Feedback</option>
+					
+					
+				</select>
+			</div>
+			<div class="banner-row-4">
+				<form id="searchForm" name="searchForm" action="/newSearch" method="post" enctype="multipart/form-data" class="inner-row">
+					<div class="inner-cell1">
+						<input type="hidden" name="nonce" value="" id="searchForm_nonce"/>
+						<input type="hidden" name="searchVO.simpleSearch" value="true" id="searchForm_searchVO_simpleSearch"/>
+						<input type="hidden" name="searchVO.searchCriteria.searchOptions[0].optionName" value="WORDS_AND_PHRASES" id="searchForm_searchVO_searchCriteria_searchOptions_0__optionName"/>
+						<input type="hidden" name="searchVO.searchCriteria.searchOptions[0].selectedOption" value="all" id="searchForm_searchVO_searchCriteria_searchOptions_0__selectedOption"/>
+						<input type="text" name="searchVO.searchCriteria.searchOptions[0].input" maxlength="255" value="" id="searchForm_searchVO_searchCriteria_searchOptions_0__input" class="searchQuery" placeholder="Search Projects"/>
+					</div>
+					<div class="inner-cell2">
+						<a	href="javascript:void(0)" onclick="simpleSearch();" class="button-search">Search</a>
+					</div>
+					<div class="inner-cell3">
+						<a href="/searchOptions" class="button-search-options" accesskey="7">Advanced Search</a>
+					</div>
+				</form>
+
+
+
+
+			</div>
+			<div class="banner-row-5">
+				
+				<ul>
+					
+						<li><a href="/home">Home</a></li>
+					
+					
+					
+						
+						
+							<li>&raquo; <span>View Project</span></li>
+						
+					
+				</ul>
+			</div>
+		</div>
+
+		<div class="visually-hidden"><a id="contentStart"></a></div>
+
+		<noscript>
+			<p>TechPort requires a browser feature called JavaScript. All modern browsers support JavaScript. For more information please see <a href="https://support.google.com/answer/23852" title="How to enable JavaScript in your browser" class="external_link" target="_blank">How to enable JavaScript in your browser.</a> If you use ad-blocking software, it may require you to allow JavaScript from this web application. Once you've enabled JavaScript you should reload this page.</p>
+		</noscript>
+		<div class="box0-no-cookie" id="cookies-disabled"></div>
+
+		<div class="box0-general">
+			
+
+<div class="box1-title">
+	<div class="title-disclosure">
+	</div>
+	<div class="title-kicker">
+		
+			Small Business Innovation Research/Small Business Tech Transfer
+		
+	</div>
+	<h1>
+		Multiscale Modeling of Hall Thrusters, Phase I
+		
+	</h1>
+	<div class="tags">
+		<div class="tag">Completed Technology Project</div>
+		
+	</div>
+	<div class="tags-right">
+		
+	</div>
+</div>
+
+<div class="box1-controls">
+	<div class="project-viewer-controls-common">
+		<a href="javascript:void(0)" onclick="showAllContent()" class="mono-button-tall show"><span>Show</span></a>
+		<a href="javascript:void(0)" onclick="hideAllContent()" class="mono-button-tall hide"><span>Hide</span></a>
+		<a href="javascript:void(0)" onclick="javascript:downloadReport('/datasheet/9780')" class="mono-button-tall last download" aria-label="Download PDF"><span>PDF</span></a>
+		<a href="javascript:void(0)" onclick="javascript:downloadReport('/datasheet/9780')" class="mono-button-wide last download" aria-label="Download PDF"><span>PDF</span></a>
+		
+	</div>
+</div>
+
+<div class="box1-general">
+	
+
+	<div class="column-1">
+		<div class="project-introduction box">
+			<div class="box-head type-3">
+				<div class="row-main-group">
+					<div class="row-main">
+						<div class="cell-main">
+							<div class="cell-main-table">
+								<div class="cell-main-row">
+									<div class="cell-text">
+										<h2>Project Introduction</h2>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="cell-bug">
+							<a href="javascript:void(0)" class="button-disclose-up">Hide</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box-content rich-display">
+				<div class="photo-well">
+					
+					
+					
+						<img alt="Multiscale Modeling of Hall Thrusters, Phase I" src="/view/9780/image" />
+					
+					
+				</div>
+				
+					<div class="truncate">
+						New multiscale modeling capability for analyzing advanced Hall thrusters is proposed. This technology offers NASA the ability to reduce development effort of new high power Hall thrusters, and reduce system complexity and increase system lifetime and durability. Historically, efforts to model Hall thrusters utilized either hybrid/fluid approach which reduce computational overhead but rely on analytical fits, or required prohibitive computational resources to model thrusters self-consistently. Even with the use of large supercomputers, the self-consistent approach was limited to small, low power thrusters. We propose a new approach in which electron transport along magnetic field lines is computed self-consistently using a kinetic code for electrons, but global cross-field properties are computed using a 2D hybrid code. This approach combines the benefits of fully kinetic self-consistent modeling with the performance gain of hybrid models. The model will be able to analyze Hall thruster discharges without requiring any user-specified mobility fits. The model will also require only computational resources available in a standard desktop workstation. In addition, ions exiting the thruster will be sampled to generate a discretized source model for use with subsequent thruster plume modeling. Plume modeling is necessary to optimize thruster spacecraft coupling, and reduce possible instrument and spacecraft component contamination effects. These three components, magnetic field line, thruster discharge, and the spacecraft environment, form the three scales of our multiscale approach. In this effort we will concentrate on extending the capability of modeling thruster discharges by developing a new light-weight hybrid code with built in support for kinetic mobility modeling.
+						<a href="javascript:void(0)" class="read-more">More &raquo;</a>
+					</div>
+				
+				
+			</div>
+		</div>
+
+		
+
+		
+			<div class="project-locations box">
+				<div class="box-head type-3">
+					<div class="row-main-group">
+						<div class="row-main">
+							<div class="cell-main">
+								<div class="cell-main-table">
+									<div class="cell-main-row">
+										<div class="cell-text">
+											<h2>Primary U.S. Work Locations and Key Partners</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="cell-bug">
+								<a href="javascript:void(0)" class="button-disclose-down">Show</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="box-content collapsed">
+					<div class="project-locations-inner">
+						
+							<div class="map-image">
+								<div id="stateMapChart">&nbsp;</div>
+							</div>
+						
+
+						
+							<table class="orgs-table">
+								<thead>
+									<tr>
+										<th>Organizations Performing Work</th>
+										<th>Role</th>
+										<th>Type</th>
+										<th>Location</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+										<tr>
+											<td>
+												
+												Particle in Cell Consulting
+												
+											</td>
+											<td>Lead Organization</td>
+											<td>Industry</td>
+											<td>Falls Church, Virginia</td>
+									
+									
+										<tr>
+											<td>
+												<img alt="Supporting organization dot" src="/images/circle-green16.png" />
+												Glenn Research Center
+												(GRC)
+											</td>
+											<td>Supporting Organization</td>
+											<td>NASA Center</td>
+											<td>Cleveland, Ohio</td>
+										</tr>
+									
+								</tbody>
+							</table>
+						
+
+						
+
+						
+							<div class="wrap-table">
+								<h4>Primary U.S. Work Locations</h4>
+								<ul>
+									
+										<li class="one-line">
+											<div>California</div>
+										</li>
+									
+										<li class="one-line">
+											<div>Ohio</div>
+										</li>
+									
+								</ul>
+							</div>
+						
+					</div>
+				</div>
+			</div>
+		
+
+		
+			<div class="project-closeout box">
+				<div class="box-head type-3">
+					<div class="row-main-group">
+						<div class="row-main">
+							<div class="cell-main">
+								<div class="cell-main-table">
+									<div class="cell-main-row">
+										<div class="cell-text">
+											<h2>Project Closeout</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="cell-bug">
+								<a href="javascript:void(0)" class="button-disclose-down">Show</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="box-content collapsed rich-display">
+					
+					
+						<table class="document-view-table wide">
+							<thead>
+								<tr>
+									<th colspan="2">Closeout Documentation</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+									<tr>
+										
+										
+											<td>
+												<span class="bold">Closeout Document: </span>Final Summary Chart
+												
+											</td>
+											<td>
+												<a class="button-blue-small" href="/file/82519">Download</a>
+											</td>
+										
+									</tr>
+								
+							</tbody>
+						</table>
+					
+				</div>
+			</div>
+		
+
+	</div>
+	<div class="column-2">
+		<div class="project-library box" id="libraryBoxContainer">
+			<div class="box-head type-3">
+				<div class="row-main-group">
+					<div class="row-main">
+						<div class="cell-main">
+							<div class="cell-main-table">
+								<div class="cell-main-row">
+									<div class="cell-text">
+										<h2>Project Library</h2>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="cell-bug">
+							<a href="javascript:void(0)" class="button-disclose-down">Show</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box-content collapsed">
+				<div class="photo-well">
+					
+					
+					
+						<img alt="Multiscale Modeling of Hall Thrusters, Phase I" src="/view/9780/image" />
+					
+					
+				</div>
+				
+			</div>
+		</div>
+		<div class="project-share box">
+			<div class="box-head type-3">
+				<div class="row-main-group">
+					<div class="row-main">
+						<div class="cell-main">
+							<div class="cell-main-table">
+								<div class="cell-main-row">
+									<div class="cell-text">
+										<h2>Share this Project</h2>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="cell-bug">
+							<a href="javascript:void(0)" class="button-disclose-down">Show</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box-content collapsed">
+				<div class="follow-icons">
+					<!-- AddThis Button BEGIN -->
+					<div class="addthis_toolbox addthis_default_style" addthis:url="https://techport.nasa.gov/view/9780">
+						<a class="addthis_button_facebook_like"></a>
+						<a class="addthis_button_tweet" tw:text="NASA TechPort - Multiscale Modeling of Hall Thrusters, Phase I 9780"></a>
+						<a class="addthis_counter addthis_pill_style"></a>
+					</div>
+					<script type="text/javascript">
+						var addthis_config = addthis_config || {};
+						addthis_config.services_exclude = 'print';
+					</script>
+					<script type="text/javascript"
+						src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51914baf64ddf9f0">
+					</script>
+					<!-- AddThis Button END -->
+				</div>
+				
+			</div>
+		</div>
+
+		
+			<div class="project-organization box">
+				<div class="box-head type-3">
+					<div class="row-main-group">
+						<div class="row-main">
+							<div class="cell-main">
+								<div class="cell-main-table">
+									<div class="cell-main-row">
+										<div class="cell-text">
+											<h2>Organizational Responsibility</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="cell-bug">
+								<a href="javascript:void(0)" class="button-disclose-down">Show</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="box-content collapsed">
+					
+						<h5>Responsible Mission Directorate:</h5>
+						<ul>
+							<li>
+								Space Technology Mission Directorate
+								
+									(STMD)
+								
+							</li>
+						</ul>
+					
+					
+						<h5>Lead Organization:</h5>
+						<ul>
+							<li>
+								Particle in Cell Consulting
+								
+							</li>
+						</ul>
+					
+					
+						<h5>Responsible Program:</h5>
+						<ul>
+							<li>Small Business Innovation Research/Small Business Tech Transfer</li>
+						</ul>
+					
+				</div>
+			</div>
+		
+
+		
+			<div class="project-management box">
+				<div class="box-head type-3">
+					<div class="row-main-group">
+						<div class="row-main">
+							<div class="cell-main">
+								<div class="cell-main-table">
+									<div class="cell-main-row">
+										<div class="cell-text">
+											<h2>Project Management</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="cell-bug">
+								<a href="javascript:void(0)" class="button-disclose-down">Show</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="box-content collapsed">
+					
+						<div class="management-column">
+							<h5>
+								Program Director:
+							</h5>
+							
+								<ul>
+								
+									
+										<li><a href="mailto:jason.l.kessler@nasa.gov">Jason L Kessler</a></li>
+									
+									
+								
+								</ul>
+							
+						</div>
+					
+
+					
+						<div class="management-column">
+							<h5>
+								Program Manager:
+							</h5>
+							
+								<ul>
+									
+										
+											<li><a href="mailto:carlos.torrez@nasa.gov">Carlos Torrez</a></li>
+										
+										
+									
+								</ul>
+							
+						</div>
+					
+
+					
+
+					
+						<div class="management-column">
+							<h5>
+								Principal Investigator:
+							</h5>
+							
+								<ul>
+									
+										
+											<li><a href="mailto:lubos.brieda@particleincell.com">Lubos Brieda</a></li>
+										
+										
+									
+								</ul>
+							
+						</div>
+					
+
+					
+						<div class="management-column">
+							<h5>
+								Co-Investigator:
+							</h5>
+							
+								<ul>
+									
+										
+										
+											<li>Lubos Brieda</li>
+										
+									
+								</ul>
+							
+						</div>
+					
+					<div class="clear"></div>
+				</div>
+			</div>
+		
+
+		
+			<div class="project-duration box">
+				<div class="box-head type-3">
+					<div class="row-main-group">
+						<div class="row-main">
+							<div class="cell-main">
+								<div class="cell-main-table">
+									<div class="cell-main-row">
+										<div class="cell-text">
+											<h2>Project Duration</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="cell-bug">
+								<a href="javascript:void(0)" class="button-disclose-down">Show</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="box-content collapsed">
+					<div class="duration-arrow">
+						<div class="duration-arrow-row">
+							<div class="duration-date">
+								
+									<strong>Start:</strong> Feb 2012
+								
+								
+							</div>
+							<div class="duration-date">
+								
+									<strong>End:</strong> Aug 2012
+								
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+
+		
+			<div class="project-maturity box">
+				<div class="box-head type-3">
+					<div class="row-main-group">
+						<div class="row-main">
+							<div class="cell-main">
+								<div class="cell-main-table">
+									<div class="cell-main-row">
+										<div class="cell-text">
+											<h2>Technology Maturity (TRL)</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="cell-bug">
+								<a href="javascript:void(0)" class="button-disclose-down">Show</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="box-content collapsed">
+					<div class="project-maturity-inner">
+						<div class="maturity-chart">
+							<div class="mask"></div>
+							<div class="legend">
+								<table>
+									<tbody>
+										
+											<tr>
+												<td>Start:&nbsp;</td>
+												<td><strong>3</strong></td>
+											</tr>
+										
+										
+											<tr>
+												<td>Current:&nbsp;</td>
+												<td><strong>3</strong></td>
+											</tr>
+										
+										
+											<tr>
+												<td>Estimated End:&nbsp;</td>
+												<td><strong>6</strong></td>
+											</tr>
+										
+									</tbody>
+								</table>
+							</div>
+							<div class="bar-row">
+								
+									<div class="bar ">1</div>
+								
+									<div class="bar ">2</div>
+								
+									<div class="bar active">3</div>
+								
+									<div class="bar ">4</div>
+								
+									<div class="bar ">5</div>
+								
+									<div class="bar active">6</div>
+								
+									<div class="bar ">7</div>
+								
+									<div class="bar ">8</div>
+								
+									<div class="bar ">9</div>
+								
+							</div>
+						</div>
+						<div class="maturity-groups">
+							<div class="group-row">
+								<div class="group">
+									Applied Research
+								</div>
+								<div class="group">
+									Development
+								</div>
+								<div class="group">
+									Demo &amp; Test
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div><!-- maturity -->
+		
+
+		
+			<div class="project-tas box">
+				<div class="box-head type-3">
+					<div class="row-main-group">
+						<div class="row-main">
+							<div class="cell-main">
+								<div class="cell-main-table">
+									<div class="cell-main-row">
+										<div class="cell-text">
+											<h2>Technology Areas</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="cell-bug">
+								<a href="javascript:void(0)" class="button-disclose-down">Show</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="box-content collapsed">
+					<div class="project-tas-inner">
+						
+							<h5>Primary:</h5>
+								
+									
+										
+										
+											<ul class="taxonomy_ul">
+												<li>
+												TX01 Propulsion Systems</li>
+												<ul style="list-style-image: url('/images/ta_bullet.gif');">
+										
+									
+										
+											
+											<li style="margin-left:0px">TX01.2 Electric Space Propulsion</li>
+										
+										
+									
+										
+											
+											<li style="margin-left:18px">TX01.2.2 Electrostatic</li>
+										
+										
+									
+									</ul></ul>
+								
+						
+						
+					</div>
+				</div>
+			</div>
+		
+
+		
+			<div class="project-destination box">
+				<div class="box-head type-3">
+					<div class="row-main-group">
+						<div class="row-main">
+							<div class="cell-main">
+								<div class="cell-main-table">
+									<div class="cell-main-row">
+										<div class="cell-text">
+											<h2>Target Destinations</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="cell-bug">
+								<a href="javascript:void(0)" class="button-disclose-down">Show</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="box-content collapsed">
+					The Sun, Earth, The Moon, Others Inside the Solar System, Outside the Solar System, Mars
+				</div>
+			</div>
+		
+
+		
+
+
+	</div>
+
+	<div class="suggest-edit box" id="suggestEditBox">
+		<div class="suggest-edit-column">
+			<div class="suggest-edit-image">
+				<img alt="Light bulb" src="/images/bulb-white.png" width="39px" />
+			</div>
+			<div class="suggest-edit-controls">
+				<h2>Suggest an Edit</h2>
+				<div class="suggest-edit-text">
+					Recommend changes and additions to this project record.
+				</div>
+				<div class="suggest-edit-button-div">
+					
+					
+						<a class="button-light-blue-small" href="javascript:void(0)" id="my-suggestion-button-public">My Suggestion</a>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+
+
+<div class="box1-general">
+	
+
+	
+		<p class="footnotes">
+			This is a historic project that was completed before the creation of TechPort on October 1, 2012.  Available data has been included.  This record may contain less data than currently active projects.
+		</p>
+	
+</div>
+
+<script type="text/javascript">
+
+
+	var entityLookup = {
+			"ARC": {
+				"x": "37.14",
+				"y": "199.46"
+			},
+			"VAFB": {
+				"x": "58.91",
+				"y": "237.89"
+			},
+			"JPL": {
+				"x": "79.4",
+				"y": "259.66"
+			},
+			"DFRC": {
+				"x": "94.77",
+				"y": "255.82"
+			},
+			"AFRC": {
+				"x": "94.77",
+				"y": "255.82"
+			},
+			"WSTF": {
+				"x": "227.96",
+				"y": "281.43"
+			},
+			"JSC": {
+				"x": "370.12",
+				"y": "319.85"
+			},
+			"MAF": {
+				"x": "425.19",
+				"y": "314.73"
+			},
+			"SSC": {
+				"x": "444.4",
+				"y": "301.92"
+			},
+			"NSSC": {
+				"x": "444.4",
+				"y": "300.64"
+			},
+			"MSFC": {
+				"x": "476.42",
+				"y": "258.38"
+			},
+			"KSC": {
+				"x": "545.57",
+				"y": "335.22"
+			},
+			"LaRC": {
+				"x": "598.08",
+				"y": "212.27"
+			},
+			"IV&amp;V": {
+				"x": "546.85",
+				"y": "195.62"
+			},
+			"GSFC": {
+				"x": "596.8",
+				"y": "181.53"
+			},
+			"HQ": {
+				"x": "600.64",
+				"y": "195.62"
+			},
+			"WFF": {
+				"x": "616.01",
+				"y": "191.78"
+			},
+			"GISS": {
+				"x": "640.35",
+				"y": "152.08"
+			},
+			"PBS": {
+				"x": "526.36",
+				"y": "148.24"
+			},
+			"GRC": {
+				"x": "536.61",
+				"y": "149.52"
+			}
+		};
+
+		function drawmap() {
+			var stateMap = new FusionCharts({
+				id: 'state-map-chart',
+				type: 'usa',
+				renderAt: 'stateMapChart',
+				width: '115%',
+				height: '100%',
+				//width: '590',
+				///height: '374',
+				dataFormat: 'json',
+				dataSource: {
+					"chart": {
+						"showLegend": false,
+						"showCanvasBorder": false,
+						"bgColor": "#efefe5",
+						"bgAlpha": "0",
+						"fillColor": "#c3c3b9",
+						"hoverColor": "#c3c3b9",
+						"borderColor": "#f2f2ef",
+						"showShadow": false,
+						"showLabels": false
+					},
+					"colorrange": {
+						"color": [
+							{
+								"minvalue": "1",
+								"maxvalue": "2",
+								"code": "#745039"
+							}
+						]
+					},
+					"markers": {
+						"shapes":[
+							{
+								"id": "starLeadCenter",
+								"type": "image",
+								"url": "/images/star-gold16.png"
+							},
+							{
+								"id": "circleSupportingCenter",
+								"type": "image",
+								"url": "/images/circle-green16.png"
+							}
+						],
+						"items": [
+							
+							
+								
+									
+										{
+											"id": "GRC",
+											"x": entityLookup["GRC"].x,
+											"y": entityLookup["GRC"].y,
+											"label": 'Glenn Research Center',
+											"shapeid": "circleSupportingCenter"
+										}
+									
+								
+							
+						]
+					},
+					"data": [
+						
+							{
+								"id": 'CA',
+								"value": "1",
+								"useHoverColor": "0",
+								"tooltext": "California"
+
+							},
+						
+							{
+								"id": 'OH',
+								"value": "1",
+								"useHoverColor": "0",
+								"tooltext": "Ohio"
+
+							}
+						
+					]
+				}
+			});
+			stateMap.setTransparent(true);
+			stateMap.render();
+		}
+		$(document).ready(function () {
+			drawmap();
+		});
+	
+
+	$(document).ready(function () {
+
+		$('.orgs-table').DataTable({
+			"responsive": true,
+			"paging":	 false,
+			"ordering":	 false,
+			"info":		 false,
+			"filter":	 false,
+			"searching": false,
+			"dom": 't',
+			"drawCallback": function() {
+				$(this).attr('style', '');
+			 }
+		});
+
+		$('.box.project-locations .box-head .button-disclose-down,.button-disclose-up').click(function(){
+			$('.orgs-table').DataTable().responsive.recalc();
+		});
+
+		
+		
+			// Set up the public 'Suggest an Edit' button
+			$('#my-suggestion-button-public').click(function() {
+				var projectName = 'Multiscale Modeling of Hall Thrusters, Phase I'
+					;
+				var projectId = '9780';
+				sendSuggestionEmail(projectId, projectName, false);
+			});
+		
+
+		itemLibrary = new Stage({
+			title:						'Project Library',
+			projectId:					'9780',
+			ajaxQueryForLibraryItems:	'/viewMoreLibrary',
+			parentObjectId:				'libraryBoxContainer',
+			hasFilterControls:			true,
+			hasSideListCategories:		true,
+			forceContentReload:			true // need to force reload in case the user closes the library with the Back button
+		});
+
+		$('.more_library').unbind().click(function () {
+			itemLibrary.showModal();
+		});
+	});
+
+	
+
+</script>
+
+
+			
+			
+			
+
+		</div>
+	</div>
+
+	<div class="box0-footer">
+		<div class="footer-inner">
+			<img class="nasa-logo" alt="NASA" src="/images/NASA-Logo.png">
+			
+			
+				<div>
+					Responsible NASA Official: Patrick Murphy
+					
+				</div>
+			
+			<div class="footer-links">
+				<div class="footer-column">
+					<ul>
+						<li><a href="https://odeo.hq.nasa.gov/nofear.html" class="external_link">No Fear Act</a></li>
+						<li><a href="https://www.nasa.gov/FOIA" class="external_link">Freedom of Information Act</a></li>
+						<li><a href="https://www.nasa.gov/about/highlights/HP_Privacy.html" class="external_link">Privacy Policy</a></li>
+					</ul>
+				</div>
+				<div class="footer-column">
+					<ul>
+						<li><a href="https://oig.nasa.gov" class="external_link">Office of Inspector General</a></li>
+						<li><a href="https://www.nasa.gov/news/budget/" class="external_link">Agency Financial Reports</a></li>
+						<li><a href="https://www.nasa.gov/about/contact/" class="external_link">Contact NASA</a></li>
+					</ul>
+				</div>
+				<div class="footer-column">
+					<ul>
+						<li><a href="/help">TechPort Help</a></li>
+						
+						
+							<li><a href="mailto:hq-techport@mail.nasa.gov">Contact TechPort</a></li>
+						
+					</ul>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+
+	<a href="javascript:void(0)" class="back-to-top">^</a>
+</body>
+</html>
