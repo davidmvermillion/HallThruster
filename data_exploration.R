@@ -1,8 +1,5 @@
 # Initialize workspace
 library(tidyverse)
-library(rjson)
-library(data.table)
-library(rio)
 library(purrr)
 library(jsonlite)
 library(fs)
@@ -18,4 +15,4 @@ htdata <- map(dir_ls(path = paste0(getwd(), "/data")), read_json)
 # https://www.r-bloggers.com/2018/10/converting-nested-json-to-a-tidy-data-frame-with-r/
 ht2 <- enframe(unlist(htdata))
 
-# Continue importimg, then find way to sort and look for interesting info from metadata.
+# Continue importing, then find way to sort and look for interesting info from metadata.
