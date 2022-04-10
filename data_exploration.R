@@ -5,6 +5,7 @@ library(data.table)
 library(rio)
 library(purrr)
 library(jsonlite)
+library(fs)
 
 
 # Load data
@@ -25,7 +26,8 @@ data <- files %>%
 data <- dir(path, pattern = "*.json") %>% 
   map_df(~fromJSON(file.path(path, .), flatten = TRUE))
 
-htdata5 <- 
+# https://githubhot.com/repo/r-lib/fs/issues/227
+htdata5 <- map(dir_ls(path = paste0(getwd(), "/data")), read_json)
 
 # Un-nest data
 # https://www.r-bloggers.com/2018/10/converting-nested-json-to-a-tidy-data-frame-with-r/
