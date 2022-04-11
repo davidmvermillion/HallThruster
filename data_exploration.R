@@ -25,6 +25,9 @@ cities <- htdata %>%
   filter(grepl('city', name)) %>% 
   filter(!value == "")
 
-# Still need to find a way to filter the names to something useful
+uniquecities <- unique(cities$value)
 
-# Continue importing, then find way to sort and look for interesting info from metadata.
+# Looking to create a tibble with this info for a chart
+table(cities$value)
+
+# Looking for interesting info from metadata
