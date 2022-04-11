@@ -12,16 +12,16 @@ htdata <- map(dir_ls(path = "data"), read_json)
 
 # Un-nest data
 # https://www.r-bloggers.com/2018/10/converting-nested-json-to-a-tidy-data-frame-with-r/
-ht2 <- enframe(unlist(htdata))
+htdata <- enframe(unlist(htdata))
 
 # Remove unnecessary characters
 # https://reactgo.com/r-remove-first-n-characters-string/
-ht2$name <- substring(ht2$name, 6)
-ht2$name <- str_remove(ht2$name, ".json.project")
+htdata$name <- substring(htdata$name, 6)
+htdata$name <- str_remove(htdata$name, ".json.project")
 
 # Exploring cities
 
-ht3 <- ht2 %>% 
+cities <- htdata %>% 
   filter(grepl('city', name)) %>% 
   filter(!value == "")
 
