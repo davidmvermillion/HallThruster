@@ -4,7 +4,7 @@ library(purrr)
 library(jsonlite)
 library(fs)
 
-# Load data
+# Load data ----
 # https://stackoverflow.com/questions/11433432/how-to-import-multiple-csv-files-at-once
 # https://stackoverflow.com/questions/35421870/reading-multiple-json-files-in-a-directory-into-one-data-frame
 # https://githubhot.com/repo/r-lib/fs/issues/227
@@ -19,15 +19,13 @@ htdata <- enframe(unlist(htdata))
 htdata$name <- substring(htdata$name, 6)
 htdata$name <- str_remove(htdata$name, ".json.project")
 
-# Exploring cities
+# Exploring cities ----
 
 cities <- htdata %>% 
   filter(grepl('city', name)) %>% 
   filter(!value == "")
 
-uniquecities <- unique(cities$value)
-
-# Looking to create a tibble with this info for a chart
-table(cities$value)
+# https://stackoverflow.com/questions/21565605/counting-the-frequency-of-an-element-in-a-data-frame
+uniquecities <- as.data.frame(table(cities$value))
 
 # Looking for interesting info from metadata
