@@ -29,3 +29,10 @@ cities <- htdata %>%
 uniquecities <- as.data.frame(table(cities$value))
 
 # Looking for interesting info from metadata
+
+# Data questions:
+# Where are most of these papers coming from (cities and research centers)?
+# Who works the most on this topic?
+# What are the time distributions of starting and ending years and months and last updated dates?
+# How many directors worked on more than one of these projects? (contactId)
+# Sentiment analysis of titles and descriptions to find main commonalities
