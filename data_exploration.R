@@ -27,6 +27,13 @@ cities <- htdata %>%
 
 # https://stackoverflow.com/questions/21565605/counting-the-frequency-of-an-element-in-a-data-frame
 uniquecities <- as.data.frame(table(cities$value))
+uniquecities <- as_tibble(uniquecities) %>% rename(
+  Cities = Var1,
+  Frequency = Freq
+)
+
+# Sort by frequency
+uniquecities <- arrange(uniquecities, desc(Frequency))
 
 # Looking for interesting info from metadata
 
