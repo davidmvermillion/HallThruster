@@ -35,6 +35,35 @@ uniquecities <- as_tibble(uniquecities) %>% rename(
 # Sort by frequency
 uniquecities <- arrange(uniquecities, desc(Frequency))
 
+# Top five cities
+topcities <- slice_head(uniquecities, n = 5)
+
+
+# Research Centers ----
+
+# Pulling out organizations (research centers)
+rcenters <- htdata %>% 
+  filter(grepl('organizationName', name))
+
+# Analyzing the lead centers
+leadcenter <- rcenters %>% 
+  filter(grepl('lead', name)) %>% 
+  arrange(value)
+
+leadcenter <- as.data.frame(table(leadcenter$value))
+
+uniquecities <- as_tibble(uniquecities) %>% rename(
+  Cities = Var1,
+  Frequency = Freq
+)
+
+# Sort by frequency
+uniquecities <- arrange(uniquecities, desc(Frequency))
+
+supportcenter
+
+responsiblecenter
+
 # Looking for interesting info from metadata
 
 # Data questions:
