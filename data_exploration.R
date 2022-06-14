@@ -52,6 +52,18 @@ leadcenter <- rcenters %>%
 
 leadcenter <- as.data.frame(table(leadcenter$value))
 
+# Rename variables
+leadcenter <- as_tibble(leadcenter) %>% rename(
+  Organization = Var1,
+  Frequency = Freq
+)
+
+# Sort by frequency
+leadcenter <- arrange(leadcenter, desc(Frequency))
+
+# Top five centers
+topcenters <- slice_head(leadcenter, n = 5)
+
 uniquecities <- as_tibble(uniquecities) %>% rename(
   Cities = Var1,
   Frequency = Freq
