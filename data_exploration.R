@@ -1,4 +1,4 @@
-# Initialize workspace
+# Initialize workspace ----
 library(tidyverse)
 library(purrr)
 library(jsonlite)
@@ -39,13 +39,13 @@ uniquecities <- arrange(uniquecities, desc(Frequency))
 topcities <- slice_head(uniquecities, n = 5)
 
 
-# Research Centers ----
+## Research Centers ----
 
 # Pulling out organizations (research centers)
 rcenters <- htdata %>% 
   filter(grepl('organizationName', name))
 
-# Analyzing the lead centers
+# Analyzing the lead centers ----
 leadcenter <- rcenters %>% 
   filter(grepl('lead', name)) %>% 
   arrange(value)
@@ -62,20 +62,47 @@ leadcenter <- as_tibble(leadcenter) %>% rename(
 leadcenter <- arrange(leadcenter, desc(Frequency))
 
 # Top five centers
-topcenters <- slice_head(leadcenter, n = 5)
+topleadcenters <- slice_head(leadcenter, n = 5)
 
-uniquecities <- as_tibble(uniquecities) %>% rename(
-  Cities = Var1,
+# Analyzing the support centers ----
+supportcenter <- rcenters %>% 
+  filter(grepl('support', name)) %>% 
+  arrange(value)
+
+supportcenter <- as.data.frame(table(supportcenter$value))
+
+# Rename variables
+supportcenter <- as_tibble(supportcenter) %>% rename(
+  Organization = Var1,
   Frequency = Freq
 )
 
 # Sort by frequency
-uniquecities <- arrange(uniquecities, desc(Frequency))
+supportcenter <- arrange(supportcenter, desc(Frequency))
 
-supportcenter
+# Top five centers
+topsupportcenters <- slice_head(supportcenter, n = 5)
 
-responsiblecenter
+# Analyzing the responsible centers ----
+responsiblecenter <- rcenters %>% 
+  filter(grepl('responsible', name)) %>% 
+  arrange(value)
 
+responsiblecenter <- as.data.frame(table(responsiblecenter$value))
+
+# Rename variables
+responsiblecenter <- as_tibble(responsiblecenter) %>% rename(
+  Organization = Var1,
+  Frequency = Freq
+)
+
+# Sort by frequency
+responsiblecenter <- arrange(responsiblecenter, desc(Frequency))
+
+# Top five centers
+topresponsiblecenters <- slice_head(responsiblecenter, n = 5)
+
+# Next steps ----
 # Looking for interesting info from metadata
 
 # Data questions:
