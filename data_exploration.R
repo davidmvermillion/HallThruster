@@ -102,6 +102,19 @@ responsiblecenter <- arrange(responsiblecenter, desc(Frequency))
 # Top five centers
 topresponsiblecenters <- slice_head(responsiblecenter, n = 5)
 
+# Centers in both roles ----
+leadandsupport <- inner_join(topleadcenters, topsupportcenters, by = "Organization")
+
+# Rename variables
+leadandsupport <- as_tibble(leadandsupport) %>% rename(
+  Lead = Frequency.x,
+  Support = Frequency.y
+)
+leadandsupport$Total <- leadandsupport$Lead + leadandsupport$Support
+
+# Sort by frequency
+leadandsupport <- arrange(leadandsupport, desc(Total))
+
 # Next steps ----
 # Looking for interesting info from metadata
 
