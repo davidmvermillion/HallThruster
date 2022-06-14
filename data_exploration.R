@@ -115,12 +115,96 @@ leadandsupport$Total <- leadandsupport$Lead + leadandsupport$Support
 # Sort by frequency
 leadandsupport <- arrange(leadandsupport, desc(Total))
 
+## Timing ----
+
+# Starting years ----
+StartYear <- htdata %>% 
+  filter(grepl('startYear', name)) %>% 
+  arrange(value)
+
+StartYear <- as.data.frame(table(StartYear$value))
+
+# Rename variables
+StartYear <- as_tibble(StartYear) %>% rename(
+  Year = Var1,
+  Frequency = Freq
+)
+
+# Sort by frequency
+StartYear <- arrange(StartYear, desc(Frequency))
+
+# Top five centers
+topstartyear <- slice_head(StartYear, n = 5)
+
+# Starting months ----
+StartMonth <- htdata %>% 
+  filter(grepl('startMonth', name)) %>% 
+  arrange(value)
+
+StartMonth <- as.data.frame(table(StartMonth$value))
+
+# Rename variables
+StartMonth <- as_tibble(StartMonth) %>% rename(
+  Month = Var1,
+  Frequency = Freq
+)
+
+# Sort by frequency
+StartMonth <- arrange(StartMonth, desc(Frequency))
+
+# Top five centers
+topstartmonth <- slice_head(StartMonth, n = 5)
+
+# Ending years ----
+EndYear <- htdata %>% 
+  filter(grepl('endYear', name)) %>% 
+  arrange(value)
+
+EndYear <- as.data.frame(table(EndYear$value))
+
+# Rename variables
+EndYear <- as_tibble(EndYear) %>% rename(
+  Year = Var1,
+  Frequency = Freq
+)
+
+# Sort by frequency
+EndYear <- arrange(EndYear, desc(Frequency))
+
+# Top five centers
+topendyear <- slice_head(EndYear, n = 5)
+
+# Ending months ----
+EndMonth <- htdata %>% 
+  filter(grepl('endMonth', name)) %>% 
+  arrange(value)
+
+EndMonth <- as.data.frame(table(EndMonth$value))
+
+# Rename variables
+EndMonth <- as_tibble(EndMonth) %>% rename(
+  Month = Var1,
+  Frequency = Freq
+)
+
+# Sort by frequency
+EndMonth <- arrange(EndMonth, desc(Frequency))
+
+# Top five centers
+topendmonth <- slice_head(EndMonth, n = 5)
+
+# Directors ----
+
+# Title sentiment analysis ----
+
+# Description sentiment analysis ----
+
 # Next steps ----
 # Looking for interesting info from metadata
 
 # Data questions:
 # Where are most of these papers coming from (cities and research centers)?
-# Who works the most on this topic?
+# Who works the most on this topic? [leadandsupportcenters]
 # What are the time distributions of starting and ending years and months and last updated dates?
 # How many directors worked on more than one of these projects? (contactId)
 # Sentiment analysis of titles and descriptions to find main commonalities
