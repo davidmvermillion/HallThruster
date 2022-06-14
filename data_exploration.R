@@ -197,10 +197,6 @@ topendmonth <- slice_head(EndMonth, n = 5)
 Directors <- htdata %>% 
   filter(grepl('programDirectors.contactId', name)) %>% 
   arrange(value)
-# Directors$nameindex <- substr(Directors$name, 1, 5)
-# Directors$fullname <- filter(htdata, grepl(as.character(substr(Directors$name, 1, 5)), name))
-
-
 
 Directors <- as.data.frame(table(Directors$value))
 
@@ -214,7 +210,7 @@ Directors <- as_tibble(Directors) %>% rename(
 Directors <- arrange(Directors, desc(Frequency))
 
 # Add names
-# I did this manually because I wasn't able to properly reference
+# I did this manually because I wasn't able to properly reference the names automatically
 names <- c('Jason L Kessler', 'Claudia M Meyer', 'Mary J Werkheiser',
            'Michael R Lapointe', 'Christopher E Baker', 'Trudy F Kortes',
            'Christopher L Moore')
@@ -225,7 +221,56 @@ topdirectors <- slice_head(Directors, n = 5)
 
 # 7 total program directors. One highly prolific program director
 
-# Principle Investigators
+# Principal Investigators ----
+# Contact ID
+PI <- htdata %>% 
+  filter(grepl('principalInvestigators.contactId', name))%>% 
+  arrange(value)
+PI$name <- str_remove(PI$name, ".principalInvestigators.contactId")
+
+# Contact full name
+PI2 <- htdata %>% 
+  filter(grepl('principalInvestigators.fullName', name)) %>% 
+  filter(grepl('Inverted', name) == FALSE) %>% 
+  arrange(value)
+PI2$name <- str_remove(PI2$name, ".principalInvestigators.fullName")
+
+PIid <- inner_join(PI, PI2, by = "name") %>% select(-name)
+
+# Rename variables
+PIid <- as_tibble(PIid) %>% rename(
+  contactId = value.x,
+  name = value.y
+)
+
+# Sort by ID
+PI2 <- as.data.frame(table(PIid$contactId))
+# Rename variables
+PI2 <- as_tibble(PI2) %>% rename(
+  contactId = Var1,
+  Frequency = Freq
+)
+# Sort by frequency
+PI2 <- arrange(PI2, desc(Frequency))
+
+# Sort by Name
+PI3 <- as.data.frame(table(PIid$name))
+# Rename variables
+PI3 <- as_tibble(PI3) %>% rename(
+  name = Var1,
+  Frequency = Freq
+)
+# Sort by frequency
+PI3 <- arrange(PI3, desc(Frequency))
+
+# Top five principle investigators
+topPIid <- slice_head(PI2, n = 5)
+topPIname <- slice_head(PI3, n = 5)
+topPI <- topPIname
+topPI$contactId <- topPIid$contactId
+
+# Clean section
+rm(list = c("topPIid", "topPIname"))
 
 # Title sentiment analysis ----
 
