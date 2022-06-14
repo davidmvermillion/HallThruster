@@ -61,7 +61,7 @@ leadcenter <- as_tibble(leadcenter) %>% rename(
 # Sort by frequency
 leadcenter <- arrange(leadcenter, desc(Frequency))
 
-# Top five centers
+# Top five lead centers
 topleadcenters <- slice_head(leadcenter, n = 5)
 
 # Analyzing the support centers ----
@@ -80,7 +80,7 @@ supportcenter <- as_tibble(supportcenter) %>% rename(
 # Sort by frequency
 supportcenter <- arrange(supportcenter, desc(Frequency))
 
-# Top five centers
+# Top five support centers
 topsupportcenters <- slice_head(supportcenter, n = 5)
 
 # Analyzing the responsible centers ----
@@ -99,7 +99,7 @@ responsiblecenter <- as_tibble(responsiblecenter) %>% rename(
 # Sort by frequency
 responsiblecenter <- arrange(responsiblecenter, desc(Frequency))
 
-# Top five centers
+# Top five responsible centers
 topresponsiblecenters <- slice_head(responsiblecenter, n = 5)
 
 # Centers in both roles ----
@@ -133,7 +133,7 @@ StartYear <- as_tibble(StartYear) %>% rename(
 # Sort by frequency
 StartYear <- arrange(StartYear, desc(Frequency))
 
-# Top five centers
+# Top five starting years
 topstartyear <- slice_head(StartYear, n = 5)
 
 # Starting months ----
@@ -152,7 +152,7 @@ StartMonth <- as_tibble(StartMonth) %>% rename(
 # Sort by frequency
 StartMonth <- arrange(StartMonth, desc(Frequency))
 
-# Top five centers
+# Top five starting months
 topstartmonth <- slice_head(StartMonth, n = 5)
 
 # Ending years ----
@@ -171,7 +171,7 @@ EndYear <- as_tibble(EndYear) %>% rename(
 # Sort by frequency
 EndYear <- arrange(EndYear, desc(Frequency))
 
-# Top five centers
+# Top five ending years
 topendyear <- slice_head(EndYear, n = 5)
 
 # Ending months ----
@@ -190,10 +190,42 @@ EndMonth <- as_tibble(EndMonth) %>% rename(
 # Sort by frequency
 EndMonth <- arrange(EndMonth, desc(Frequency))
 
-# Top five centers
+# Top five ending months
 topendmonth <- slice_head(EndMonth, n = 5)
 
 # Directors ----
+Directors <- htdata %>% 
+  filter(grepl('programDirectors.contactId', name)) %>% 
+  arrange(value)
+# Directors$nameindex <- substr(Directors$name, 1, 5)
+# Directors$fullname <- filter(htdata, grepl(as.character(substr(Directors$name, 1, 5)), name))
+
+
+
+Directors <- as.data.frame(table(Directors$value))
+
+# Rename variables
+Directors <- as_tibble(Directors) %>% rename(
+  ContactId = Var1,
+  Frequency = Freq
+)
+
+# Sort by frequency
+Directors <- arrange(Directors, desc(Frequency))
+
+# Add names
+# I did this manually because I wasn't able to properly reference
+names <- c('Jason L Kessler', 'Claudia M Meyer', 'Mary J Werkheiser',
+           'Michael R Lapointe', 'Christopher E Baker', 'Trudy F Kortes',
+           'Christopher L Moore')
+Directors$names <- names
+
+# Top five directors
+topdirectors <- slice_head(Directors, n = 5)
+
+# 7 total program directors. One highly prolific program director
+
+# Principle Investigators
 
 # Title sentiment analysis ----
 
