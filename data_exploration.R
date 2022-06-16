@@ -3,6 +3,7 @@ library(tidyverse)
 library(purrr)
 library(jsonlite)
 library(fs)
+library(tidytext)
 
 # Load data ----
 # https://stackoverflow.com/questions/11433432/how-to-import-multiple-csv-files-at-once
@@ -288,7 +289,10 @@ title <- as_tibble(title) %>% rename(
   Project = name,
   Title = value
 )
-  
+
+# Tokenize titles
+title_analysis <- title %>% unnest_tokens(word, Title)
+
 
 # Description sentiment analysis ----
 
