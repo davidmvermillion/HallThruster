@@ -286,4 +286,5 @@ rm(list = c("topPIid", "topPIname"))
 # Who works the most on this topic? [leadandsupportcenters]
 # What are the time distributions of starting and ending years and months and last updated dates?
 # How many directors worked on more than one of these projects? (contactId)
-# Sentiment analysis of titles and descriptions to find main commonalities
+# Sentiment analysis of titles and descriptions to find main commonalities (and word correlations)
+# Similarities here: https://www.tidytextmining.com/nasa.html
