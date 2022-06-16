@@ -274,6 +274,22 @@ rm(list = c("topPIid", "topPIname"))
 
 # Title sentiment analysis ----
 
+# Pull in titles
+title <- htdata %>% 
+  filter(grepl('title', name)) %>% 
+  filter(grepl('libraryItems', name) == FALSE) %>% 
+  filter(grepl('program', name) == FALSE) %>% 
+  filter(grepl('Node', name) == FALSE) %>% 
+  filter(grepl('Document', name) == FALSE) %>% 
+  arrange(value)
+
+# Rename variables
+title <- as_tibble(title) %>% rename(
+  Project = name,
+  Title = value
+)
+  
+
 # Description sentiment analysis ----
 
 # Visuals ----
