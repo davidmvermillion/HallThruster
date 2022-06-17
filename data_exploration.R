@@ -4,6 +4,7 @@ library(purrr)
 library(jsonlite)
 library(fs)
 library(tidytext)
+library(textdata)
 
 # Load data ----
 # https://stackoverflow.com/questions/11433432/how-to-import-multiple-csv-files-at-once
@@ -291,8 +292,25 @@ title <- as_tibble(title) %>% rename(
 )
 
 # Tokenize titles
-title_analysis <- title %>% unnest_tokens(word, Title)
+title_analysis <- title %>% unnest_tokens(word, Title) %>% anti_join(stop_words)
+title_group <- title_analysis %>% count(word, sort = TRUE)
 
+# Sentiment Loading
+afinn <- get_sentiments("afinn")
+bing <- get_sentiments("bing")
+nrc <- get_sentiments("nrc") # requires citation when used
+
+# Sentiments
+title_nrc <- title_group %>% inner_join(nrc) %>%
+  count(word, sort = TRUE)
+title_afinn <- title_group %>% inner_join(afinn) %>%
+  count(word, sort = TRUE)
+title_bing <- title_group %>% inner_join(bing) %>%
+  count(word, sort = TRUE)
+
+# None of those had anything useful. Trying again with descriptions
+
+# Look at common words
 
 # Description sentiment analysis ----
 
