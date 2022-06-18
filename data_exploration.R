@@ -356,10 +356,10 @@ title_bar %>%
   ggplot(
     aes(x = reorder(word, n), y = n)
   ) +
-  geom_bar(stat = 'identity', fill = "#f4b3ae") +
+  geom_bar(stat = 'identity', fill = "#c2f2f7") +
   geom_bar(data = title_highlight,
            aes(x = reorder(word, n), y = n),
-           stat = "identity", fill = "#E34234") +
+           stat = "identity", fill = "#34d5e3") +
   coord_flip() +
   theme_generic() +
   ggtitle("21 studies\nwere in Phase II") +
@@ -369,7 +369,7 @@ title_bar %>%
           margin(t = 10, r = 50, b = 10, l = 10,
                  unit = "pt"))
 
-  # Wordcloud notes from https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a
+# Wordcloud notes from https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a
 set.seed(200)
 wordcloud(words = title_group$word, freq = title_group$n, min.freq = 2, 
           max.words = 200, random.order = FALSE, rot.per = 0,
@@ -390,3 +390,5 @@ wordcloud(words = title_group$word, freq = title_group$n, min.freq = 2,
 # How many directors worked on more than one of these projects? (contactId)
 # Sentiment analysis of titles and descriptions to find main commonalities (and word correlations)
 # Similarities here: https://www.tidytextmining.com/nasa.html
+# Clean up library loading section
+# Add a way to download the images
