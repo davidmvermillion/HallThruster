@@ -349,7 +349,27 @@ title_bing <- title_group %>% inner_join(bing) %>%
 # Look at common words
 title_bar <- slice_head(title_group, n = 10)
 
-# Wordcloud notes from https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a
+title_highlight <- title_bar %>% 
+  filter(word == "ii")
+
+title_bar %>% 
+  ggplot(
+    aes(x = reorder(word, n), y = n)
+  ) +
+  geom_bar(stat = 'identity', fill = "#f4b3ae") +
+  geom_bar(data = title_highlight,
+           aes(x = reorder(word, n), y = n),
+           stat = "identity", fill = "#E34234") +
+  coord_flip() +
+  theme_generic() +
+  ggtitle("21 studies\nwere in Phase II") +
+  labs(y = ("Word Frequency"),
+       x = ("Title\nWords")) +
+  theme(plot.margin =
+          margin(t = 10, r = 50, b = 10, l = 10,
+                 unit = "pt"))
+
+  # Wordcloud notes from https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a
 set.seed(200)
 wordcloud(words = title_group$word, freq = title_group$n, min.freq = 2, 
           max.words = 200, random.order = FALSE, rot.per = 0,
