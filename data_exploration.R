@@ -9,6 +9,39 @@ library(wordcloud)
 library(RColorBrewer)
 library(wordcloud2)
 
+# ggplot Theme ----
+theme_generic <- function(base_size = 12,
+                          base_family = "",
+                          base_line_size = base_size / 170,
+                          base_rect_size = base_size / 170){
+  theme_minimal(base_size = base_size, 
+                base_family = base_family,
+                base_line_size = base_line_size) %+replace%
+    theme(
+      axis.title.y = element_text(angle = 0, vjust = 0, hjust = 0.5, size = 15,
+                                  color = "grey55", margin =
+                                    margin(t = 0, r = 7, b = 0, l = 0,
+                                           unit = "pt")),
+      axis.title.x = element_text(hjust = 0, size = 15, color = "grey55"),
+      axis.text = element_text(size = 12, color = "grey60"),
+      axis.line = element_line(color = "grey60"),
+      axis.ticks = element_line(color = "grey60"),
+      plot.title = element_text(hjust = 0.5, size = 40, color = "grey40",
+                                margin =
+                                  margin(t = 0, r = 0, b = 10, l = 0,
+                                         unit = "pt")),
+      panel.grid = element_blank(),
+      plot.subtitle = element_text(hjust = 0.5, size = 20, color = "grey40",
+                                   margin =
+                                     margin(t = 10, r = 0, b = 0, l = 0,
+                                            unit = "pt")),
+      legend.title = element_text(size = 15, color = "grey40"),
+      legend.text = element_text(size = 12, color = "grey30"),
+      complete = TRUE
+    )
+}
+
+
 # Load data ----
 # https://stackoverflow.com/questions/11433432/how-to-import-multiple-csv-files-at-once
 # https://stackoverflow.com/questions/35421870/reading-multiple-json-files-in-a-directory-into-one-data-frame
@@ -317,10 +350,10 @@ title_bing <- title_group %>% inner_join(bing) %>%
 title_bar <- slice_head(title_group, n = 10)
 
 # Wordcloud notes from https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a
-set.seed(1)
+set.seed(200)
 wordcloud(words = title_group$word, freq = title_group$n, min.freq = 2, 
           max.words = 200, random.order = FALSE, rot.per = 0,
-          colors = brewer.pal(8, "Dark2"), scale = c(6.25, .5))
+          colors = brewer.pal(8, "Dark2"), scale = c(8, .35))
 # Use for sizing to export https://stackoverflow.com/questions/9245519/how-can-one-increase-size-of-plotted-area-wordclouds-in-r
 
 # Description sentiment analysis ----
