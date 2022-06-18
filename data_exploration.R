@@ -5,6 +5,9 @@ library(jsonlite)
 library(fs)
 library(tidytext)
 library(textdata)
+library(wordcloud)
+library(RColorBrewer)
+library(wordcloud2)
 
 # Load data ----
 # https://stackoverflow.com/questions/11433432/how-to-import-multiple-csv-files-at-once
@@ -311,6 +314,14 @@ title_bing <- title_group %>% inner_join(bing) %>%
 # None of those had anything useful. Trying again with descriptions
 
 # Look at common words
+title_bar <- slice_head(title_group, n = 10)
+
+# Wordcloud notes from https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a
+set.seed(1)
+wordcloud(words = title_group$word, freq = title_group$n, min.freq = 2, 
+          max.words = 200, random.order = FALSE, rot.per = 0,
+          colors = brewer.pal(8, "Dark2"), scale = c(6.25, .5))
+# Use for sizing to export https://stackoverflow.com/questions/9245519/how-can-one-increase-size-of-plotted-area-wordclouds-in-r
 
 # Description sentiment analysis ----
 
