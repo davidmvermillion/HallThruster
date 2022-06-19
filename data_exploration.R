@@ -1,13 +1,7 @@
 # Initialize workspace ----
-library(tidyverse)
-library(purrr)
-library(jsonlite)
-library(fs)
-library(tidytext)
-library(textdata)
-library(wordcloud)
-library(RColorBrewer)
-library(wordcloud2)
+packages <- c('tidyverse', 'purrr', 'jsonlite', 'fs', 'tidytext', 'textdata',
+              'wordcloud', 'RColorBrewer', 'wordcloud2')
+lapply(packages, library, character.only = TRUE)
 
 # ggplot Theme ----
 theme_generic <- function(base_size = 12,
