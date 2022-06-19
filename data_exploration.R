@@ -399,7 +399,8 @@ description$value <-
                                       "</strong>" = "", "<li>" = "",
                                       "</li>" = "", "<ul>" = "", "</ul>" = "",
                                       "<a>" = "", "</a>" = "",
-                                      "<a target=\"_blank\"" = "", "&nbsp" = ""))
+                                      "<a target=\"_blank\"" = "", "&nbsp" = "",
+                                      "<.*>" = "", "href.*>" = ""))
 
 # Visuals ----
 
