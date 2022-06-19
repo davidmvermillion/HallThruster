@@ -290,7 +290,7 @@ topstartmonth %>%
            stat = "identity", fill = "#34d5e3") +
   coord_flip() +
   theme_generic() +
-  ggtitle("Most Studies start in June or January") +
+  ggtitle("Most studies start in June or January") +
   labs(y = ("Frequency"),
        x = ("Month")) +
   theme(plot.margin =
@@ -338,6 +338,7 @@ EndMonth <- arrange(EndMonth, desc(Frequency))
 topendmonth <- slice_head(EndMonth, n = 5)
 
 ## People ----
+
 # Directors ----
 Directors <- htdata %>% 
   filter(grepl('programDirectors.contactId', name)) %>% 
@@ -555,8 +556,6 @@ description_bar %>%
         plot.subtitle = element_text(vjust = 2.75, color = "grey50"))
 ggsave("description_bar.svg", device = "svg", path = "Images")
 ggsave("description_bar.jpeg", device = "jpeg", path = "Images")
-
-# Visuals ----
 
 # Next steps ----
 # Looking for interesting info from metadata
