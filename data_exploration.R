@@ -418,6 +418,15 @@ description_bing <- description_group %>% inner_join(bing) %>%
 # nrc has something, but it isn't particularly useful for my story. The others
 # are completely useless.
 
+# Look at common words
+description_bar <- slice_head(description_group, n = 10)
+
+# Word cloud shows a lot of admin words
+set.seed(200)
+wordcloud(words = description_group$word, freq = title_group$n, min.freq = 2, 
+          max.words = 100, random.order = FALSE, rot.per = 0,
+          colors = brewer.pal(8, "Dark2"), scale = c(8, .35))
+
 # Visuals ----
 
 # Next steps ----
