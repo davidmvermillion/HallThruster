@@ -250,6 +250,13 @@ StartYear <- arrange(StartYear, desc(Frequency))
 # Top five starting years
 topstartyear <- slice_head(StartYear, n = 5)
 
+
+# Wordcloud
+set.seed(10)
+test <- wordcloud(words = StartYear$Year, freq = StartYear$Frequency, min.freq = 2, 
+                  max.words = 200, random.order = FALSE, rot.per = 0,
+                  colors = brewer.pal(8, "Dark2"), scale = c(8, .35))
+
 # Starting months ----
 StartMonth <- htdata %>% 
   filter(grepl('startMonth', name)) %>% 
@@ -268,6 +275,29 @@ StartMonth <- arrange(StartMonth, desc(Frequency))
 
 # Top five starting months
 topstartmonth <- slice_head(StartMonth, n = 5)
+
+# Bar graph
+sm_highlight <- topstartmonth %>% 
+  filter(Month %in% c(6, 1))
+
+topstartmonth %>% 
+  ggplot(
+    aes(x = reorder(Month, Frequency), y = Frequency)
+  ) +
+  geom_bar(stat = 'identity', fill = "#c2f2f7") +
+  geom_bar(data = sm_highlight,
+           aes(x = reorder(Month, Frequency), y = Frequency),
+           stat = "identity", fill = "#34d5e3") +
+  coord_flip() +
+  theme_generic() +
+  ggtitle("Most Studies start in June or January") +
+  labs(y = ("Frequency"),
+       x = ("Month")) +
+  theme(plot.margin =
+          margin(t = 10, r = 70, b = 10, l = 10,
+                 unit = "pt"))
+ggsave("top_start_bar.svg", device = "svg", path = "Images")
+ggsave("top_start_bar.jpeg", device = "jpeg", path = "Images")
 
 # Ending years ----
 EndYear <- htdata %>% 
