@@ -427,6 +427,30 @@ wordcloud(words = description_group$word, freq = title_group$n, min.freq = 2,
           max.words = 100, random.order = FALSE, rot.per = 0,
           colors = brewer.pal(8, "Dark2"), scale = c(8, .35))
 
+# Bar chart
+
+description_highlight <- description_bar %>% 
+  filter(word == "phase")
+
+description_bar %>% 
+  ggplot(
+    aes(x = reorder(word, n), y = n)
+  ) +
+  geom_bar(stat = 'identity', fill = "#c2f2f7") +
+  geom_bar(data = description_highlight,
+           aes(x = reorder(word, n), y = n),
+           stat = "identity", fill = "#34d5e3") +
+  coord_flip() +
+  theme_generic() +
+  ggtitle("Phase was referenced >1k times",
+          subtitle = "Nearly 12 times per study") +
+  labs(y = ("Word Frequency"),
+       x = ("Title\nWords")) +
+  theme(plot.margin =
+          margin(t = 10, r = 50, b = 10, l = 10,
+                 unit = "pt"),
+        plot.subtitle = element_text(vjust = 2.75, color = "grey50"))
+
 # Visuals ----
 
 # Next steps ----
