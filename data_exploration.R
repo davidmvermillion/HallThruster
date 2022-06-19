@@ -393,9 +393,13 @@ description <- htdata %>%
   filter(grepl('library', name) == FALSE) %>% 
   filter(grepl('Code', name) == FALSE)
 
-# Clean html tags
-description$value <- str_remove_all(description$value, "<p>")
-description$value <- str_remove_all(description$value, "</p>")
+# Clean html tags (URLs still present)
+description$value <- 
+  str_remove_all(description$value, c("<p>" = "", "</p>" = "", "<strong>" = "",
+                                      "</strong>" = "", "<li>" = "",
+                                      "</li>" = "", "<ul>" = "", "</ul>" = "",
+                                      "<a>" = "", "</a>" = "",
+                                      "<a target=\"_blank\"" = "", "&nbsp" = ""))
 
 # Visuals ----
 
