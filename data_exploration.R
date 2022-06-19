@@ -449,6 +449,8 @@ description_bar %>%
           margin(t = 10, r = 50, b = 10, l = 10,
                  unit = "pt"),
         plot.subtitle = element_text(vjust = 2.75, color = "grey50"))
+ggsave("description_bar.svg", device = "svg", path = "Images")
+ggsave("description_bar.jpeg", device = "jpeg", path = "Images")
 
 # Visuals ----
 
