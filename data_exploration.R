@@ -126,6 +126,32 @@ wordcloud(words = leadcenter$Organization, freq = leadcenter$Frequency, min.freq
           max.words = 200, random.order = FALSE, rot.per = 0,
           colors = brewer.pal(8, "Dark2"), scale = c(3.5, .5))
 
+# Bar graph
+
+leadcenter_highlight <- topleadcenters %>% 
+  filter(Organization == "Glenn Research Center")
+
+topleadcenters %>% 
+  ggplot(
+    aes(x = reorder(Organization, Frequency), y = Frequency)
+  ) +
+  geom_bar(stat = 'identity', fill = "#c2f2f7") +
+  geom_bar(data = leadcenter_highlight,
+           aes(x = reorder(Organization, Frequency), y = Frequency),
+           stat = "identity", fill = "#34d5e3") +
+  coord_flip() +
+  theme_generic() +
+  ggtitle("Only one NASA agency was a\ntop five lead research center") +
+  labs(y = ("Frequency"),
+       x = ("Org")) +
+  theme(plot.margin =
+          margin(t = 10, r = 10, b = 10, l = 10,
+                 unit = "pt"),
+        plot.title = element_text(hjust = 0.5))
+# Can't save by code because of rendering issues
+ggsave("leadcenters_bar.svg", device = "svg", path = "Images")
+ggsave("leadcenters_bar.jpeg", device = "jpeg", path = "Images")
+
 # Analyzing the support centers ----
 supportcenter <- rcenters %>% 
   filter(grepl('support', name)) %>% 
