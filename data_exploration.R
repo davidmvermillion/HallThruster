@@ -385,6 +385,18 @@ wordcloud(words = leadcenter$Organization, freq = leadcenter$Frequency, min.freq
 
 # Description sentiment analysis ----
 
+# Pull in descriptions
+description <- htdata %>% 
+  filter(grepl('description', name)) %>% 
+  filter(grepl('Document', name) == FALSE) %>% 
+  filter(grepl('file', name) == FALSE) %>% 
+  filter(grepl('library', name) == FALSE) %>% 
+  filter(grepl('Code', name) == FALSE)
+
+# Clean html tags
+description$value <- str_remove_all(description$value, "<p>")
+description$value <- str_remove_all(description$value, "</p>")
+
 # Visuals ----
 
 # Next steps ----
