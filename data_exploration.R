@@ -393,14 +393,19 @@ description <- htdata %>%
   filter(grepl('library', name) == FALSE) %>% 
   filter(grepl('Code', name) == FALSE)
 
-# Clean html tags (URLs still present)
+# Remove HTML tags and URLs
 description$value <- 
   str_remove_all(description$value, c("<p>" = "", "</p>" = "", "<strong>" = "",
                                       "</strong>" = "", "<li>" = "",
                                       "</li>" = "", "<ul>" = "", "</ul>" = "",
                                       "<a>" = "", "</a>" = "",
                                       "<a target=\"_blank\"" = "", "&nbsp" = "",
-                                      "<.*>" = "", "href.*>" = ""))
+                                      "<.*>" = "", "href.*>" = "", ":" = ": ",
+                                      ";" = " "))
+
+# Tokenize description
+description_analysis <- description %>% unnest_tokens(word, value) %>% anti_join(stop_words)
+description_group <- description_analysis %>% count(word, sort = TRUE)
 
 # Visuals ----
 
