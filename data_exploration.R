@@ -72,6 +72,28 @@ uniquecities <- arrange(uniquecities, desc(Frequency))
 # Top five cities
 topcities <- slice_head(uniquecities, n = 5)
 
+# Bar chart
+cities_highlight <- topcities %>% 
+  filter(Cities == "Cleveland")
+
+topcities %>% 
+  ggplot(
+    aes(x = reorder(Cities, Frequency), y = Frequency)
+  ) +
+  geom_bar(stat = 'identity', fill = "#c2f2f7") +
+  geom_bar(data = cities_highlight,
+           aes(x = reorder(Cities, Frequency), y = Frequency),
+           stat = "identity", fill = "#34d5e3") +
+  coord_flip() +
+  theme_generic() +
+  ggtitle("Cleveland appeared 57 times") +
+  labs(y = "Frequency",
+       x = "Cities") +
+  theme(plot.margin =
+          margin(t = 10, r = 50, b = 10, l = 10,
+                 unit = "pt"))
+ggsave("top_cities.svg", device = "svg", path = "Images")
+ggsave("top_cities.jpeg", device = "jpeg", path = "Images")
 
 ## Research Centers ----
 
