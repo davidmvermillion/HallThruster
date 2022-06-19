@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='svglite' width='755.16pt' height='504.00pt' viewBox='0 0 755.16 504.00'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: none;'/>
+<defs>
+  <clipPath id='cpMC4wMHw3NTUuMTZ8MC4wMHw1MDQuMDA='>
+    <rect x='0.00' y='0.00' width='755.16' height='504.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw3NTUuMTZ8MC4wMHw1MDQuMDA=)'>
+</g>
+<defs>
+  <clipPath id='cpMTIwLjc1fDcwNS4zNXwxMDAuMTl8NDYzLjY0'>
+    <rect x='120.75' y='100.19' width='584.60' height='363.45' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMTIwLjc1fDcwNS4zNXwxMDAuMTl8NDYzLjY0)'>
+<rect x='147.32' y='105.54' width='531.46' height='32.07' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #C2F2F7;' />
+<rect x='147.32' y='141.17' width='364.01' height='32.07' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #C2F2F7;' />
+<rect x='147.32' y='176.80' width='276.65' height='32.07' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #C2F2F7;' />
+<rect x='147.32' y='212.43' width='160.16' height='32.07' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #C2F2F7;' />
+<rect x='147.32' y='248.06' width='152.88' height='32.07' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #C2F2F7;' />
+<rect x='147.32' y='283.70' width='138.32' height='32.07' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #C2F2F7;' />
+<rect x='147.32' y='319.33' width='131.04' height='32.07' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #C2F2F7;' />
+<rect x='147.32' y='354.96' width='123.76' height='32.07' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #C2F2F7;' />
+<rect x='147.32' y='390.59' width='101.92' height='32.07' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #C2F2F7;' />
+<rect x='147.32' y='426.22' width='87.36' height='32.07' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #C2F2F7;' />
+<rect x='147.32' y='248.06' width='152.88' height='32.07' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #34D5E3;' />
+</g>
+<g clip-path='url(#cpMC4wMHw3NTUuMTZ8MC4wMHw1MDQuMDA=)'>
+<polyline points='120.75,463.64 120.75,100.19 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<text x='115.37' y='446.56' text-anchor='end' style='font-size: 12.00px;fill: #999999; font-family: "Arial";' textLength='42.71px' lengthAdjust='spacingAndGlyphs'>cathode</text>
+<text x='115.37' y='410.92' text-anchor='end' style='font-size: 12.00px;fill: #999999; font-family: "Arial";' textLength='38.02px' lengthAdjust='spacingAndGlyphs'>system</text>
+<text x='115.37' y='375.29' text-anchor='end' style='font-size: 12.00px;fill: #999999; font-family: "Arial";' textLength='46.69px' lengthAdjust='spacingAndGlyphs'>thrusters</text>
+<text x='115.37' y='339.66' text-anchor='end' style='font-size: 12.00px;fill: #999999; font-family: "Arial";' textLength='38.02px' lengthAdjust='spacingAndGlyphs'>electric</text>
+<text x='115.37' y='304.03' text-anchor='end' style='font-size: 12.00px;fill: #999999; font-family: "Arial";' textLength='32.69px' lengthAdjust='spacingAndGlyphs'>power</text>
+<text x='115.37' y='268.40' text-anchor='end' style='font-size: 12.00px;fill: #999999; font-family: "Arial";' textLength='5.33px' lengthAdjust='spacingAndGlyphs'>ii</text>
+<text x='115.37' y='232.76' text-anchor='end' style='font-size: 12.00px;fill: #999999; font-family: "Arial";' textLength='55.38px' lengthAdjust='spacingAndGlyphs'>propulsion</text>
+<text x='115.37' y='197.13' text-anchor='end' style='font-size: 12.00px;fill: #999999; font-family: "Arial";' textLength='40.69px' lengthAdjust='spacingAndGlyphs'>thruster</text>
+<text x='115.37' y='161.50' text-anchor='end' style='font-size: 12.00px;fill: #999999; font-family: "Arial";' textLength='18.68px' lengthAdjust='spacingAndGlyphs'>hall</text>
+<text x='115.37' y='125.87' text-anchor='end' style='font-size: 12.00px;fill: #999999; font-family: "Arial";' textLength='32.70px' lengthAdjust='spacingAndGlyphs'>phase</text>
+<polyline points='117.76,442.26 120.75,442.26 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='117.76,406.63 120.75,406.63 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='117.76,370.99 120.75,370.99 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='117.76,335.36 120.75,335.36 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='117.76,299.73 120.75,299.73 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='117.76,264.10 120.75,264.10 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='117.76,228.47 120.75,228.47 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='117.76,192.83 120.75,192.83 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='117.76,157.20 120.75,157.20 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='117.76,121.57 120.75,121.57 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='120.75,463.64 705.35,463.64 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='147.32,466.63 147.32,463.64 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='292.92,466.63 292.92,463.64 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='438.53,466.63 438.53,463.64 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<polyline points='584.13,466.63 584.13,463.64 ' style='stroke-width: 0.15; stroke: #999999; stroke-linecap: butt;' />
+<text x='147.32' y='477.61' text-anchor='middle' style='font-size: 12.00px;fill: #999999; font-family: "Arial";' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>0</text>
+<text x='292.92' y='477.61' text-anchor='middle' style='font-size: 12.00px;fill: #999999; font-family: "Arial";' textLength='13.35px' lengthAdjust='spacingAndGlyphs'>20</text>
+<text x='438.53' y='477.61' text-anchor='middle' style='font-size: 12.00px;fill: #999999; font-family: "Arial";' textLength='13.35px' lengthAdjust='spacingAndGlyphs'>40</text>
+<text x='584.13' y='477.61' text-anchor='middle' style='font-size: 12.00px;fill: #999999; font-family: "Arial";' textLength='13.35px' lengthAdjust='spacingAndGlyphs'>60</text>
+<text x='120.75' y='492.46' style='font-size: 15.00px;fill: #8C8C8C; font-family: "Arial";' textLength='110.57px' lengthAdjust='spacingAndGlyphs'>Word Frequency</text>
+<text x='31.49' y='447.44' text-anchor='middle' style='font-size: 15.00px;fill: #8C8C8C; font-family: "Arial";' textLength='27.78px' lengthAdjust='spacingAndGlyphs'>Title</text>
+<text x='31.49' y='463.64' text-anchor='middle' style='font-size: 15.00px;fill: #8C8C8C; font-family: "Arial";' textLength='43.06px' lengthAdjust='spacingAndGlyphs'>Words</text>
+<text x='413.05' y='42.82' text-anchor='middle' style='font-size: 40.00px;fill: #666666; font-family: "Arial";' textLength='182.36px' lengthAdjust='spacingAndGlyphs'>21 studies</text>
+<text x='413.05' y='86.02' text-anchor='middle' style='font-size: 40.00px;fill: #666666; font-family: "Arial";' textLength='286.85px' lengthAdjust='spacingAndGlyphs'>were in Phase II</text>
+</g>
+</svg>

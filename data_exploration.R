@@ -1,7 +1,9 @@
 # Initialize workspace ----
 packages <- c('tidyverse', 'purrr', 'jsonlite', 'fs', 'tidytext', 'textdata',
-              'wordcloud', 'RColorBrewer', 'wordcloud2')
+              'wordcloud', 'RColorBrewer', 'wordcloud2', 'webshot',
+              'htmlwidgets')
 lapply(packages, library, character.only = TRUE)
+webshot::install_phantomjs()
 
 # ggplot Theme ----
 theme_generic <- function(base_size = 12,
@@ -370,18 +372,15 @@ title_bar %>%
   theme(plot.margin =
           margin(t = 10, r = 50, b = 10, l = 10,
                  unit = "pt"))
+ggsave("title_bar.svg", device = "svg", path = "Images")
+ggsave("title_bar.jpeg", device = "jpeg", path = "Images")
 
 # Wordcloud notes from https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a
 set.seed(200)
-wordcloud(words = title_group$word, freq = title_group$n, min.freq = 2, 
+test <- wordcloud(words = title_group$word, freq = title_group$n, min.freq = 2, 
           max.words = 200, random.order = FALSE, rot.per = 0,
           colors = brewer.pal(8, "Dark2"), scale = c(8, .35))
 # Use for sizing to export https://stackoverflow.com/questions/9245519/how-can-one-increase-size-of-plotted-area-wordclouds-in-r
-
-set.seed(200)
-wordcloud(words = leadcenter$Organization, freq = leadcenter$Frequency, min.freq = 2, 
-          max.words = 200, random.order = FALSE, rot.per = 0,
-          colors = brewer.pal(8, "Dark2"), scale = c(3.5, .5))
 
 # Description sentiment analysis ----
 
