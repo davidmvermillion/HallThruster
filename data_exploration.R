@@ -96,6 +96,12 @@ leadcenter <- arrange(leadcenter, desc(Frequency))
 # Top five lead centers
 topleadcenters <- slice_head(leadcenter, n = 5)
 
+# Lead center wordcloud
+set.seed(200)
+wordcloud(words = leadcenter$Organization, freq = leadcenter$Frequency, min.freq = 2, 
+          max.words = 200, random.order = FALSE, rot.per = 0,
+          colors = brewer.pal(8, "Dark2"), scale = c(3.5, .5))
+
 # Analyzing the support centers ----
 supportcenter <- rcenters %>% 
   filter(grepl('support', name)) %>% 
@@ -225,6 +231,7 @@ EndMonth <- arrange(EndMonth, desc(Frequency))
 # Top five ending months
 topendmonth <- slice_head(EndMonth, n = 5)
 
+## People ----
 # Directors ----
 Directors <- htdata %>% 
   filter(grepl('programDirectors.contactId', name)) %>% 
@@ -304,6 +311,7 @@ topPI$contactId <- topPIid$contactId
 # Clean section
 rm(list = c("topPIid", "topPIname"))
 
+## Text ----
 # Title sentiment analysis ----
 
 # Pull in titles
@@ -369,6 +377,11 @@ wordcloud(words = title_group$word, freq = title_group$n, min.freq = 2,
           max.words = 200, random.order = FALSE, rot.per = 0,
           colors = brewer.pal(8, "Dark2"), scale = c(8, .35))
 # Use for sizing to export https://stackoverflow.com/questions/9245519/how-can-one-increase-size-of-plotted-area-wordclouds-in-r
+
+set.seed(200)
+wordcloud(words = leadcenter$Organization, freq = leadcenter$Frequency, min.freq = 2, 
+          max.words = 200, random.order = FALSE, rot.per = 0,
+          colors = brewer.pal(8, "Dark2"), scale = c(3.5, .5))
 
 # Description sentiment analysis ----
 
