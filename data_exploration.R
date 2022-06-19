@@ -407,6 +407,17 @@ description$value <-
 description_analysis <- description %>% unnest_tokens(word, value) %>% anti_join(stop_words)
 description_group <- description_analysis %>% count(word, sort = TRUE)
 
+# Sentiments
+description_nrc <- description_group %>% inner_join(nrc) %>%
+  count(word, sort = TRUE)
+description_afinn <- description_group %>% inner_join(afinn) %>%
+  count(word, sort = TRUE)
+description_bing <- description_group %>% inner_join(bing) %>%
+  count(word, sort = TRUE)
+
+# nrc has something, but it isn't particularly useful for my story. The others
+# are completely useless.
+
 # Visuals ----
 
 # Next steps ----
