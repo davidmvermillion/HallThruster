@@ -171,6 +171,33 @@ supportcenter <- arrange(supportcenter, desc(Frequency))
 # Top five support centers
 topsupportcenters <- slice_head(supportcenter, n = 5)
 
+# Bar graph
+
+supportcenter_highlight <- topsupportcenters %>% 
+  filter(Organization %in% c("Busek Company, Inc.", 
+           "University of Michigan-Ann Arbor"))
+
+topsupportcenters %>% 
+  ggplot(
+    aes(x = reorder(Organization, Frequency), y = Frequency)
+  ) +
+  geom_bar(stat = 'identity', fill = "#c2f2f7") +
+  geom_bar(data = supportcenter_highlight,
+           aes(x = reorder(Organization, Frequency), y = Frequency),
+           stat = "identity", fill = "#34d5e3") +
+  coord_flip() +
+  theme_generic() +
+  ggtitle("Only one NASA agency was a\ntop five lead research center") +
+  labs(y = ("Frequency"),
+       x = ("Org")) +
+  theme(plot.margin =
+          margin(t = 10, r = 10, b = 10, l = 10,
+                 unit = "pt"),
+        plot.title = element_text(hjust = 0.5))
+# Can't save by code because of rendering issues
+ggsave("leadcenters_bar.svg", device = "svg", path = "Images")
+ggsave("leadcenters_bar.jpeg", device = "jpeg", path = "Images")
+
 # Analyzing the responsible centers ----
 responsiblecenter <- rcenters %>% 
   filter(grepl('responsible', name)) %>% 
