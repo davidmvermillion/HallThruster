@@ -211,8 +211,10 @@ responsiblecenter <- as_tibble(responsiblecenter) %>% rename(
 # Sort by frequency
 responsiblecenter <- arrange(responsiblecenter, desc(Frequency))
 
-# Top five responsible centers
-topresponsiblecenters <- slice_head(responsiblecenter, n = 5)
+# Conclusion
+# Space Technology Mission Directorate was almost exclusively the responsible center.
+# Only two mentions were made of the Human Exploration and Operations Mission Directorate
+
 
 # Centers in both roles ----
 leadandsupport <- inner_join(topleadcenters, topsupportcenters, by = "Organization")
