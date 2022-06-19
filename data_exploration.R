@@ -146,8 +146,7 @@ topleadcenters %>%
        x = ("Org")) +
   theme(plot.margin =
           margin(t = 10, r = 10, b = 10, l = 10,
-                 unit = "pt"),
-        plot.title = element_text(hjust = 0.5))
+                 unit = "pt"))
 # Can't save by code because of rendering issues
 ggsave("leadcenters_bar.svg", device = "svg", path = "Images")
 ggsave("leadcenters_bar.jpeg", device = "jpeg", path = "Images")
@@ -174,8 +173,8 @@ topsupportcenters <- slice_head(supportcenter, n = 5)
 # Bar graph
 
 supportcenter_highlight <- topsupportcenters %>% 
-  filter(Organization %in% c("Busek Company, Inc.", 
-           "University of Michigan-Ann Arbor"))
+  filter(Organization %in% c("Glenn Research Center", 
+           "Jet Propulsion Laboratory", "Marshall Space Flight Center"))
 
 topsupportcenters %>% 
   ggplot(
@@ -187,16 +186,14 @@ topsupportcenters %>%
            stat = "identity", fill = "#34d5e3") +
   coord_flip() +
   theme_generic() +
-  ggtitle("Only one NASA agency was a\ntop five lead research center") +
+  ggtitle("Three NASA agencies\nwere top supporters") +
   labs(y = ("Frequency"),
        x = ("Org")) +
   theme(plot.margin =
           margin(t = 10, r = 10, b = 10, l = 10,
-                 unit = "pt"),
-        plot.title = element_text(hjust = 0.5))
-# Can't save by code because of rendering issues
-ggsave("leadcenters_bar.svg", device = "svg", path = "Images")
-ggsave("leadcenters_bar.jpeg", device = "jpeg", path = "Images")
+                 unit = "pt"))
+ggsave("supportcenters_bar.svg", device = "svg", path = "Images")
+ggsave("supportcenters_bar.jpeg", device = "jpeg", path = "Images")
 
 # Analyzing the responsible centers ----
 responsiblecenter <- rcenters %>% 
