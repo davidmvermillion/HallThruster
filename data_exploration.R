@@ -193,19 +193,14 @@ StartMonth <- as_tibble(StartMonth) %>% rename(
 # Sort by frequency
 StartMonth <- arrange(StartMonth, desc(Frequency))
 
-StartMonth <- as_tibble(uniquecities) %>% rename(
-  Cities = Var1,
-  Frequency = Freq
-)
-
 # Top five starting months
 topstartmonth <- slice_head(StartMonth, n = 5)
 
 # Wordcloud
-set.seed(10)
+set.seed(140)
 test <- wordcloud(words = StartMonth$Month, freq = StartMonth$Frequency, min.freq = 2, 
                   max.words = 200, random.order = FALSE, rot.per = 0,
-                  colors = brewer.pal(8, "Dark2"), scale = c(8, .35))
+                  colors = brewer.pal(8, "Dark2"), scale = c(4, .45))
 
 # Ending years ----
 EndYear <- htdata %>% 
