@@ -1,9 +1,7 @@
 # Initialize workspace ----
 packages <- c('tidyverse', 'purrr', 'jsonlite', 'fs', 'tidytext', 'textdata',
-              'wordcloud', 'RColorBrewer', 'wordcloud2', 'webshot',
-              'htmlwidgets')
+              'wordcloud', 'RColorBrewer', 'wordcloud2')
 lapply(packages, library, character.only = TRUE)
-webshot::install_phantomjs()
 
 # ggplot Theme ----
 theme_generic <- function(base_size = 12,
@@ -72,28 +70,6 @@ uniquecities <- arrange(uniquecities, desc(Frequency))
 # Top five cities
 topcities <- slice_head(uniquecities, n = 5)
 
-# Bar chart
-cities_highlight <- topcities %>% 
-  filter(Cities == "Cleveland")
-
-topcities %>% 
-  ggplot(
-    aes(x = reorder(Cities, Frequency), y = Frequency)
-  ) +
-  geom_bar(stat = 'identity', fill = "#c2f2f7") +
-  geom_bar(data = cities_highlight,
-           aes(x = reorder(Cities, Frequency), y = Frequency),
-           stat = "identity", fill = "#34d5e3") +
-  coord_flip() +
-  theme_generic() +
-  ggtitle("Cleveland appeared 57 times") +
-  labs(y = "Frequency",
-       x = "Cities") +
-  theme(plot.margin =
-          margin(t = 10, r = 50, b = 10, l = 10,
-                 unit = "pt"))
-ggsave("top_cities.svg", device = "svg", path = "Images")
-ggsave("top_cities.jpeg", device = "jpeg", path = "Images")
 
 ## Research Centers ----
 
@@ -126,31 +102,6 @@ wordcloud(words = leadcenter$Organization, freq = leadcenter$Frequency, min.freq
           max.words = 200, random.order = FALSE, rot.per = 0,
           colors = brewer.pal(8, "Dark2"), scale = c(3.5, .5))
 
-# Bar graph
-
-leadcenter_highlight <- topleadcenters %>% 
-  filter(Organization == "Glenn Research Center")
-
-topleadcenters %>% 
-  ggplot(
-    aes(x = reorder(Organization, Frequency), y = Frequency)
-  ) +
-  geom_bar(stat = 'identity', fill = "#c2f2f7") +
-  geom_bar(data = leadcenter_highlight,
-           aes(x = reorder(Organization, Frequency), y = Frequency),
-           stat = "identity", fill = "#34d5e3") +
-  coord_flip() +
-  theme_generic() +
-  ggtitle("Only one NASA agency was a\ntop five lead research center") +
-  labs(y = ("Frequency"),
-       x = ("Org")) +
-  theme(plot.margin =
-          margin(t = 10, r = 10, b = 10, l = 10,
-                 unit = "pt"))
-# Can't save by code because of rendering issues
-ggsave("leadcenters_bar.svg", device = "svg", path = "Images")
-ggsave("leadcenters_bar.jpeg", device = "jpeg", path = "Images")
-
 # Analyzing the support centers ----
 supportcenter <- rcenters %>% 
   filter(grepl('support', name)) %>% 
@@ -170,31 +121,6 @@ supportcenter <- arrange(supportcenter, desc(Frequency))
 # Top five support centers
 topsupportcenters <- slice_head(supportcenter, n = 5)
 
-# Bar graph
-
-supportcenter_highlight <- topsupportcenters %>% 
-  filter(Organization %in% c("Glenn Research Center", 
-           "Jet Propulsion Laboratory", "Marshall Space Flight Center"))
-
-topsupportcenters %>% 
-  ggplot(
-    aes(x = reorder(Organization, Frequency), y = Frequency)
-  ) +
-  geom_bar(stat = 'identity', fill = "#c2f2f7") +
-  geom_bar(data = supportcenter_highlight,
-           aes(x = reorder(Organization, Frequency), y = Frequency),
-           stat = "identity", fill = "#34d5e3") +
-  coord_flip() +
-  theme_generic() +
-  ggtitle("Three NASA agencies\nwere top supporters") +
-  labs(y = ("Frequency"),
-       x = ("Org")) +
-  theme(plot.margin =
-          margin(t = 10, r = 10, b = 10, l = 10,
-                 unit = "pt"))
-ggsave("supportcenters_bar.svg", device = "svg", path = "Images")
-ggsave("supportcenters_bar.jpeg", device = "jpeg", path = "Images")
-
 # Analyzing the responsible centers ----
 responsiblecenter <- rcenters %>% 
   filter(grepl('responsible', name)) %>% 
@@ -211,10 +137,8 @@ responsiblecenter <- as_tibble(responsiblecenter) %>% rename(
 # Sort by frequency
 responsiblecenter <- arrange(responsiblecenter, desc(Frequency))
 
-# Conclusion
-# Space Technology Mission Directorate was almost exclusively the responsible center.
-# Only two mentions were made of the Human Exploration and Operations Mission Directorate
-
+# Top five responsible centers
+topresponsiblecenters <- slice_head(responsiblecenter, n = 5)
 
 # Centers in both roles ----
 leadandsupport <- inner_join(topleadcenters, topsupportcenters, by = "Organization")
@@ -250,13 +174,6 @@ StartYear <- arrange(StartYear, desc(Frequency))
 # Top five starting years
 topstartyear <- slice_head(StartYear, n = 5)
 
-
-# Wordcloud
-set.seed(10)
-test <- wordcloud(words = StartYear$Year, freq = StartYear$Frequency, min.freq = 2, 
-                  max.words = 200, random.order = FALSE, rot.per = 0,
-                  colors = brewer.pal(8, "Dark2"), scale = c(8, .35))
-
 # Starting months ----
 StartMonth <- htdata %>% 
   filter(grepl('startMonth', name)) %>% 
@@ -268,36 +185,27 @@ StartMonth <- as.data.frame(table(StartMonth$value))
 StartMonth <- as_tibble(StartMonth) %>% rename(
   Month = Var1,
   Frequency = Freq
-)
+) %>% mutate(Month = recode(Month, "6" = "June", "1" = "January", "2" = "February",
+                            "5" = "May", "8" = "August", "10" = "October",
+                            "7" = "July", "9" = "September", "4" = "April",
+                            "12" = "December", "3" = "March"))
 
 # Sort by frequency
 StartMonth <- arrange(StartMonth, desc(Frequency))
 
+StartMonth <- as_tibble(uniquecities) %>% rename(
+  Cities = Var1,
+  Frequency = Freq
+)
+
 # Top five starting months
 topstartmonth <- slice_head(StartMonth, n = 5)
 
-# Bar graph
-sm_highlight <- topstartmonth %>% 
-  filter(Month %in% c(6, 1))
-
-topstartmonth %>% 
-  ggplot(
-    aes(x = reorder(Month, Frequency), y = Frequency)
-  ) +
-  geom_bar(stat = 'identity', fill = "#c2f2f7") +
-  geom_bar(data = sm_highlight,
-           aes(x = reorder(Month, Frequency), y = Frequency),
-           stat = "identity", fill = "#34d5e3") +
-  coord_flip() +
-  theme_generic() +
-  ggtitle("Most studies start in June or January") +
-  labs(y = ("Frequency"),
-       x = ("Month")) +
-  theme(plot.margin =
-          margin(t = 10, r = 70, b = 10, l = 10,
-                 unit = "pt"))
-ggsave("top_start_bar.svg", device = "svg", path = "Images")
-ggsave("top_start_bar.jpeg", device = "jpeg", path = "Images")
+# Wordcloud
+set.seed(10)
+test <- wordcloud(words = StartMonth$Month, freq = StartMonth$Frequency, min.freq = 2, 
+                  max.words = 200, random.order = FALSE, rot.per = 0,
+                  colors = brewer.pal(8, "Dark2"), scale = c(8, .35))
 
 # Ending years ----
 EndYear <- htdata %>% 
@@ -338,7 +246,6 @@ EndMonth <- arrange(EndMonth, desc(Frequency))
 topendmonth <- slice_head(EndMonth, n = 5)
 
 ## People ----
-
 # Directors ----
 Directors <- htdata %>% 
   filter(grepl('programDirectors.contactId', name)) %>% 
@@ -477,15 +384,18 @@ title_bar %>%
   theme(plot.margin =
           margin(t = 10, r = 50, b = 10, l = 10,
                  unit = "pt"))
-ggsave("title_bar.svg", device = "svg", path = "Images")
-ggsave("title_bar.jpeg", device = "jpeg", path = "Images")
 
 # Wordcloud notes from https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a
 set.seed(200)
-test <- wordcloud(words = title_group$word, freq = title_group$n, min.freq = 2, 
+wordcloud(words = title_group$word, freq = title_group$n, min.freq = 2, 
           max.words = 200, random.order = FALSE, rot.per = 0,
           colors = brewer.pal(8, "Dark2"), scale = c(8, .35))
 # Use for sizing to export https://stackoverflow.com/questions/9245519/how-can-one-increase-size-of-plotted-area-wordclouds-in-r
+
+set.seed(200)
+wordcloud(words = leadcenter$Organization, freq = leadcenter$Frequency, min.freq = 2, 
+          max.words = 200, random.order = FALSE, rot.per = 0,
+          colors = brewer.pal(8, "Dark2"), scale = c(3.5, .5))
 
 # Description sentiment analysis ----
 
@@ -554,8 +464,8 @@ description_bar %>%
           margin(t = 10, r = 50, b = 10, l = 10,
                  unit = "pt"),
         plot.subtitle = element_text(vjust = 2.75, color = "grey50"))
-ggsave("description_bar.svg", device = "svg", path = "Images")
-ggsave("description_bar.jpeg", device = "jpeg", path = "Images")
+
+# Visuals ----
 
 # Next steps ----
 # Looking for interesting info from metadata
