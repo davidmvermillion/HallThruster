@@ -102,6 +102,28 @@ wordcloud(words = leadcenter$Organization, freq = leadcenter$Frequency, min.freq
           max.words = 200, random.order = FALSE, rot.per = 0,
           colors = brewer.pal(8, "Dark2"), scale = c(3.5, .5))
 
+# Lead center bar graph
+lead_research_highlight <- topleadcenters %>% 
+  filter(Organization == "Busek Company, Inc.")
+
+topleadcenters %>% 
+  ggplot(
+    aes(x = reorder(Organization, Frequency), y = Frequency)
+  ) +
+  geom_bar(stat = 'identity', fill = "#c2f2f7") +
+  geom_bar(data = lead_research_highlight,
+           aes(x = reorder(Organization, Frequency), y = Frequency),
+           stat = "identity", fill = "#34d5e3") +
+  coord_flip() +
+  theme_generic() +
+  ggtitle("Busek Company built the first\nflight US Hall Thruster") +
+  labs(y = ("Frequency"),
+       x = ("Org")) +
+  theme(plot.margin =
+          margin(t = 10, r = 10, b = 10, l = 10,
+                 unit = "pt"))
+# Must be exported manually for proper rendering
+
 # Analyzing the support centers ----
 supportcenter <- rcenters %>% 
   filter(grepl('support', name)) %>% 
@@ -460,7 +482,6 @@ description_bar %>%
                  unit = "pt"),
         plot.subtitle = element_text(vjust = 2.75, color = "grey50"))
 
-# Visuals ----
 
 # Next steps ----
 # Looking for interesting info from metadata
