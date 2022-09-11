@@ -1,6 +1,6 @@
 # Background
 
-While Hall Effect Thrusters are very fuel efficient, their thrust power is on the order of a mouse fart. 🐁💨
+While [Hall Effect Thrusters](https://technology.nasa.gov/patent/LEW-TOPS-34) are very fuel efficient, their thrust power is on the order of a mouse fart. 🐁💨
 
 This dichotomy made me curious about who does the most research and development and where that experimentation takes place. 🤔
 
