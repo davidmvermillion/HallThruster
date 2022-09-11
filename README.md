@@ -13,8 +13,8 @@ I created a [LinkedIn Post](https://www.linkedin.com/posts/davidmvermillion_vdsm
 # Files
 
 - [data_exploration.R](https://github.com/davidmvermillion/HallThruster/blob/main/data_exploration.R) is the primary script file for the analysis.
-- [Who Studies Hall Effect Thrusters and Where.pdf] (https://github.com/davidmvermillion/HallThruster/blob/main/Who%20Studies%20Hall%20Effect%20Thrusters%20and%20Where.pdf) is the PDF version of my analysis.
-- [Who Studies Hall Effect Thrusters and Where.pptx] (https://github.com/davidmvermillion/HallThruster/blob/main/Who%20Studies%20Hall%20Effect%20Thrusters%20and%20Where.pptx) is the PowerPoint version of my analysis.
+- [Who Studies Hall Effect Thrusters and Where.pdf](https://github.com/davidmvermillion/HallThruster/blob/main/Who%20Studies%20Hall%20Effect%20Thrusters%20and%20Where.pdf) is the PDF version of my analysis.
+- [Who Studies Hall Effect Thrusters and Where.pptx](https://github.com/davidmvermillion/HallThruster/blob/main/Who%20Studies%20Hall%20Effect%20Thrusters%20and%20Where.pptx) is the PowerPoint version of my analysis.
 - [data](https://github.com/davidmvermillion/HallThruster/tree/main/data) is the folder with the JSON files I analyzed.
 
 # Additional Presentations
