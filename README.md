@@ -26,6 +26,7 @@ Besides my primary summary presentation, this project served as a springboard fo
 - [Presentation of Findings](https://www.linkedin.com/posts/davidmvermillion_vdsml-space-spacewithdavid-activity-6951559448729440257-qbBS?)
 - [Finding Open Data](https://www.linkedin.com/posts/davidmvermillion_metadata-json-vdsml-activity-6956951008811921408-9YZC?)
 - [Loading Multiple R Packages](https://www.linkedin.com/posts/davidmvermillion_data-datawithdavid-r-activity-6966411024526716928-9omI?)
+- [Repeatable ggplot2 Themes](https://discord.com/channels/932481267566530581/986016504770359436/1020307260393672814)
 
 
 ## YouTube
@@ -33,3 +34,4 @@ Besides my primary summary presentation, this project served as a springboard fo
 - [Presentation of Findings](https://youtu.be/lZw_Q-ir70M)
 - [Finding Open Data](https://youtu.be/mE574dwZ6EQ)
 - [Loading Multiple R Packages](https://youtu.be/57-jsSfbc9Q)
+- [Repeatable ggplot2 Themes](https://youtu.be/EbUGtdQbeu4)
